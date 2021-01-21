@@ -1,4 +1,4 @@
-import signUp from "./pages/signUp";
+import SignUp from "./pages/signUp";
 import signIn from "./pages/signin";
 import header from "./pages/header";
 import React from "react";
@@ -8,7 +8,7 @@ const App = () => {
     <BrowserRouter>
       <div>
         <main>
-          <Route path="/" component={signUp} exact />
+          <Route path="/" component={SignUp} exact />
           <Route path="/signin" component={signIn} exact />
           <Route path="/home" component={header} exact />
         </main>
