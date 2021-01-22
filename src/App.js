@@ -19,6 +19,4 @@ const App = () => {
 
 export default App;
 
-
-
 //background-image: url(https://opconventioncenter.com/wp-content/uploads/2018/02/EXPO-Inc.-tools.jpeg);

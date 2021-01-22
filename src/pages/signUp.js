@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./signUp.css";
 import { TextField, Button, InputBase } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addUser } from "../components/actions/actions";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp({ currentId, setCurrentId }) {
+export default function SignUp() {
   const [userData, setUserData] = useState({
     name: "",
     state: "",
@@ -28,33 +28,26 @@ export default function SignUp({ currentId, setCurrentId }) {
     email: "",
     password: "",
   });
-  // const data = useSelector((state) =>
-  //   currentId ? state.posts.find((p) => p._id === currentId) : null
-  // );
+  fetch("http://localhost:5003/users/addUser", {
+    method: "addUser",
+    body: JSON.stringify({
+      name: userData.name,
+      state: userData.state,
+      city: userData.city,
+      email: userData.email,
+      password: userData.password,
+    }),
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      console.log(result);
+    });
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     console.log(userData);
     e.preventDefault();
-    if (currentId) {
-      // dispatch(updatePosts(currentId, userData));
-      dispatch(addUser(userData));
-    } else {
-      dispatch(addUser(userData));
-    }
-    clear();
-  };
-  useEffect(() => {
-    if (data) setUserData(data);
-  }, [data]);
-  const clear = () => {
-    setCurrentId(null);
-    setUserData({
-      name: "",
-      state: "",
-      city: "",
-      email: "",
-      password: "",
-    });
+    dispatch(addUser(userData));
+    // clear();
   };
   const classes = useStyles();
   return (

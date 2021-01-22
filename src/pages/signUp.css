@@ -6,7 +6,7 @@
   padding-right: 5px;
   margin: 20px 10px 20px 10px;
   width: 400px !important;
-  height: 550px !important;
+  height: 450px !important;
   background-color: rgba(0, 8, 10, 0.8);
   text-align: center;
   border-radius: 10px;
@@ -29,7 +29,9 @@ img {
 }
 
 .button {
-  margin-top: 15px;
+  margin-top: 45px;
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
 body {
