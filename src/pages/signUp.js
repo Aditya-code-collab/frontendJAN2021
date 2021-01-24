@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./signUp.css";
-import { TextField, Button, InputBase } from "@material-ui/core";
+import { TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch } from "react-redux";
-import { addUser } from "../components/actions/actions";
-
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+// import Axios from "axios";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -28,28 +28,38 @@ export default function SignUp() {
     email: "",
     password: "",
   });
-  fetch("http://localhost:5003/users/addUser", {
-    method: "addUser",
-    body: JSON.stringify({
-      name: userData.name,
-      state: userData.state,
-      city: userData.city,
-      email: userData.email,
-      password: userData.password,
-    }),
-  })
-    .then((res) => res.json())
-    .then((result) => {
-      console.log(result);
-    });
-  const dispatch = useDispatch();
+
+  const classes = useStyles();
+  const history = useHistory();
+
+  const MoveToHome = () => {
+    console.log("Moving to home....");
+    history.push("/home");
+  };
+
   const handleSubmit = (e) => {
     console.log(userData);
     e.preventDefault();
-    dispatch(addUser(userData));
-    // clear();
+    try {
+      const { data } = axios.post("http://localhost:5003/users/addUser", {
+        name: userData.name,
+        state: userData.state,
+        city: userData.city,
+        email: userData.email,
+        password: userData.password,
+      });
+      localStorage.setItem("name", userData.name);
+      localStorage.setItem("state", userData.state);
+      localStorage.setItem("city", userData.city);
+      localStorage.setItem("email", userData.email);
+      console.log("Data added.");
+      MoveToHome();
+    } catch (err) {
+      console.log(err);
+    }
+    // SubmitUserData(userData);
   };
-  const classes = useStyles();
+
   return (
     <div
       style={{
