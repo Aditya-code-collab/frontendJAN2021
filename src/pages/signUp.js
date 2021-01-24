@@ -162,7 +162,7 @@ export default function SignUp() {
                   Submit
                 </Button>
                 <div style={{ marginTop: "20px", textColor: "white" }}>
-                  <a href="/signin">Already have an account? Sign In</a>
+                  <a href="/SignIn">Already have an account? Sign In</a>
                 </div>
               </div>
             </div>

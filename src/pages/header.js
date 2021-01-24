@@ -8,7 +8,7 @@ function header() {
   //     email: "",
   //     password: "",
   //   });
-  const user = localStorage.getItem("userData");
+  const user = localStorage.getItem("name");
 
   return (
     <div>
@@ -19,6 +19,7 @@ function header() {
             <a>Help</a>
             <a>Rent your tools</a>
             <a>About</a>
+            <a>{user}</a>
           </div>
           <div align="right">
             <a>user.name</a>
