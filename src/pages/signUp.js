@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./signUp.css";
-import { TextField, Button, InputBase } from "@material-ui/core";
+import { TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../components/actions/actions";
-
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+// import Axios from "axios";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp({ currentId, setCurrentId }) {
+export default function SignUp() {
   const [userData, setUserData] = useState({
     name: "",
     state: "",
@@ -28,35 +28,38 @@ export default function SignUp({ currentId, setCurrentId }) {
     email: "",
     password: "",
   });
-  // const data = useSelector((state) =>
-  //   currentId ? state.posts.find((p) => p._id === currentId) : null
-  // );
-  const dispatch = useDispatch();
+
+  const classes = useStyles();
+  const history = useHistory();
+
+  const MoveToHome = () => {
+    console.log("Moving to home....");
+    history.push("/home");
+  };
+
   const handleSubmit = (e) => {
     console.log(userData);
     e.preventDefault();
-    if (currentId) {
-      // dispatch(updatePosts(currentId, userData));
-      dispatch(addUser(userData));
-    } else {
-      dispatch(addUser(userData));
+    try {
+      const { data } = axios.post("http://localhost:5003/users/addUser", {
+        name: userData.name,
+        state: userData.state,
+        city: userData.city,
+        email: userData.email,
+        password: userData.password,
+      });
+      localStorage.setItem("name", userData.name);
+      localStorage.setItem("state", userData.state);
+      localStorage.setItem("city", userData.city);
+      localStorage.setItem("email", userData.email);
+      console.log("Data added.");
+      MoveToHome();
+    } catch (err) {
+      console.log(err);
     }
-    clear();
+    // SubmitUserData(userData);
   };
-  useEffect(() => {
-    if (data) setUserData(data);
-  }, [data]);
-  const clear = () => {
-    setCurrentId(null);
-    setUserData({
-      name: "",
-      state: "",
-      city: "",
-      email: "",
-      password: "",
-    });
-  };
-  const classes = useStyles();
+
   return (
     <div
       style={{
@@ -159,7 +162,7 @@ export default function SignUp({ currentId, setCurrentId }) {
                   Submit
                 </Button>
                 <div style={{ marginTop: "20px", textColor: "white" }}>
-                  <a href="/signin">Already have an account? Sign In</a>
+                  <a href="/SignIn">Already have an account? Sign In</a>
                 </div>
               </div>
             </div>
