@@ -1,6 +1,7 @@
 import SignUp from "./pages/signUp";
 import SignIn from "./pages/signin";
 import header from "./pages/header";
+import Product from "./pages/product";
 import React from "react";
 import { BrowserRouter, Link, Route } from "react-router-dom";
 const App = () => {
@@ -11,6 +12,7 @@ const App = () => {
           <Route path="/" component={SignUp} exact />
           <Route path="/SignIn" component={SignIn} exact />
           <Route path="/home" component={header} exact />
+          <Route path="/products" component={Product} exact />
         </main>
       </div>
     </BrowserRouter>
