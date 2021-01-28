@@ -4,6 +4,8 @@ import { TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import Axios from "axios";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,6 +21,18 @@ const useStyles = makeStyles((theme) => ({
     textColor: "white",
   },
 }));
+
+function submitValidator(name, city, state, email, password) {
+  if (
+    name.trim().length > 3 &&
+    city.trim().length > 1 &&
+    state.trim().length > 2 &&
+    email.trim().length > 3 &&
+    password.trim().length > 3
+  )
+    return true;
+  else return false;
+}
 
 export default function SignUp() {
   const [userData, setUserData] = useState({
@@ -38,24 +52,52 @@ export default function SignUp() {
   };
 
   const handleSubmit = (e) => {
+    const showTost = () =>
+      toast.warn(
+        <p style={{ fontSize: "15px", fontWeight: "bold" }}>
+          <i>Please fill the form correctly!</i>
+        </p>,
+        {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
+
     console.log(userData);
     e.preventDefault();
-    try {
-      const { data } = axios.post("http://localhost:5003/users/addUser", {
-        name: userData.name,
-        state: userData.state,
-        city: userData.city,
-        email: userData.email,
-        password: userData.password,
-      });
-      localStorage.setItem("name", userData.name);
-      localStorage.setItem("state", userData.state);
-      localStorage.setItem("city", userData.city);
-      localStorage.setItem("email", userData.email);
-      console.log("Data added.");
-      MoveToHome();
-    } catch (err) {
-      console.log(err);
+    if (
+      submitValidator(
+        userData.name,
+        userData.city,
+        userData.state,
+        userData.email,
+        userData.password
+      )
+    ) {
+      try {
+        const { data } = axios.post("http://localhost:5003/users/addUser", {
+          name: userData.name,
+          state: userData.state,
+          city: userData.city,
+          email: userData.email,
+          password: userData.password,
+        });
+        localStorage.setItem("name", userData.name);
+        localStorage.setItem("state", userData.state);
+        localStorage.setItem("city", userData.city);
+        localStorage.setItem("email", userData.email);
+        console.log("Data added.");
+        MoveToHome();
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      showTost();
     }
     // SubmitUserData(userData);
   };
@@ -95,6 +137,8 @@ export default function SignUp() {
                   onChange={(e) => {
                     setUserData({ ...userData, name: e.target.value });
                   }}
+                  helperText="At least four characters."
+                  error={userData.name.trim().length > 3 ? false : true}
                   className={classes.textField}
                 />
               </div>
@@ -105,6 +149,8 @@ export default function SignUp() {
                   fullWidth
                   label="City"
                   value={userData.city}
+                  helperText="At least two characters."
+                  error={userData.city.trim().length > 1 ? false : true}
                   onChange={(e) => {
                     setUserData({ ...userData, city: e.target.value });
                   }}
@@ -118,6 +164,8 @@ export default function SignUp() {
                   fullWidth
                   label="State"
                   value={userData.state}
+                  helperText="At least three characters."
+                  error={userData.state.trim().length > 2 ? false : true}
                   onChange={(e) => {
                     setUserData({ ...userData, state: e.target.value });
                   }}
@@ -131,6 +179,8 @@ export default function SignUp() {
                   fullWidth
                   label="Email"
                   value={userData.email}
+                  helperText="At least four characters."
+                  error={userData.email.trim().length > 3 ? false : true}
                   onChange={(e) => {
                     setUserData({ ...userData, email: e.target.value });
                   }}
@@ -144,6 +194,8 @@ export default function SignUp() {
                   fullWidth
                   label="Password"
                   value={userData.password}
+                  helperText="At least four characters."
+                  error={userData.password.trim().length > 3 ? false : true}
                   onChange={(e) => {
                     setUserData({ ...userData, password: e.target.value });
                   }}
@@ -168,6 +220,19 @@ export default function SignUp() {
             </div>
           </form>
         </center>
+      </div>
+      <div style={{ alignContent: "end", show: "flex" }}>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </div>
     </div>
   );

@@ -5,6 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import FileBase from "react-file-base64";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -47,6 +49,20 @@ function GeneratePID() {
   return pidT;
 }
 
+function submitValidate(title, pid, description, cpa, city, state, images) {
+  if (
+    title.trim().length > 3 &&
+    description.trim().length > 9 &&
+    cpa > 0 &&
+    city.trim().length != 0 &&
+    state.trim().length != 0 &&
+    images.length > 0 &&
+    pid.length > 0
+  )
+    return true;
+  else return false;
+}
+
 export default function Product() {
   const [itemData, setItemData] = useState({
     title: "tool",
@@ -65,22 +81,52 @@ export default function Product() {
       history.push("/home");
     };
 
+    const showTost = () =>
+      toast.warn(
+        <p style={{ fontSize: "15px", fontWeight: "bold" }}>
+          <i>Please fill the form correctly!</i>
+        </p>,
+        {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
+
     console.log(itemData);
     e.preventDefault();
-    try {
-      const { data } = axios.post("http://localhost:5003/users/addItem", {
-        title: itemData.title,
-        pid: itemData.pid,
-        description: itemData.description,
-        cpa: itemData.cpa,
-        city: itemData.city,
-        state: itemData.state,
-        images: itemData.images,
-        sender: itemData.sender,
-      });
-      MoveToHome();
-    } catch (error) {
-      console.log(error);
+    if (
+      submitValidate(
+        itemData.title,
+        itemData.pid,
+        itemData.description,
+        itemData.cpa,
+        itemData.city,
+        itemData.state,
+        itemData.images
+      )
+    ) {
+      try {
+        const { data } = axios.post("http://localhost:5003/users/addItem", {
+          title: itemData.title,
+          pid: itemData.pid,
+          description: itemData.description,
+          cpa: itemData.cpa,
+          city: itemData.city,
+          state: itemData.state,
+          images: itemData.images,
+          sender: itemData.sender,
+        });
+        MoveToHome();
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      showTost();
     }
   };
 
@@ -261,6 +307,19 @@ export default function Product() {
                 </div>
               </form>
             </div>
+          </div>
+          <div style={{ alignContent: "end", show: "flex" }}>
+            <ToastContainer
+              position="bottom-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
           </div>
         </div>
       </div>
