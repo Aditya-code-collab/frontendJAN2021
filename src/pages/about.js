@@ -1,4 +1,6 @@
 import React from "react";
+import niket from "../images/niket.jpg";
+import aditya from "../images/aditya.jpeg";
 
 export default function aboutPage() {
   return (
@@ -40,6 +42,36 @@ export default function aboutPage() {
         <div>
           The website has been made as a group project of the following students
           of Indian Institute of Information Technology Una:
+        </div>
+        <div style={{ alignItems: "center" }} className="row">
+          <div
+            style={{
+              width: "50%",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src={niket}
+              alt="Niket Agrawal"
+              style={{ borderRadius: "50%", height: "150px", width: "150px" }}
+            />
+            <div>Niket Agrawal</div>
+            <a href="https://niket-iiitu.github.io/Portfolio/">Portfolio</a>
+          </div>
+          <div
+            style={{
+              width: "50%",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src={aditya}
+              alt="Aditya Singh"
+              style={{ borderRadius: "50%", height: "150px", width: "150px" }}
+            />
+            <div>Aditya Singh</div>
+            {/* <a href="">Portfolio</a> */}
+          </div>
         </div>
       </div>
     </div>
