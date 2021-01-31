@@ -6,7 +6,7 @@
   padding-right: 5px;
   margin: 20px 10px 20px 10px;
   width: 400px !important;
-  height: 450px !important;
+  height: 500px !important;
   background-color: rgba(0, 8, 10, 0.8);
   text-align: center;
   border-radius: 10px;
@@ -35,5 +35,5 @@ img {
 }
 
 body {
-  color: white;
+  color: rgb(52, 52, 52, 0.8);
 }

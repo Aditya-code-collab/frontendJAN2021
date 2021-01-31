@@ -1,4 +1,4 @@
-import react from "react";
+import React from "react";
 import Scroll from "../components/infinitetiles";
 function header() {
   //   const [userData, setUserData] = useState({
@@ -14,15 +14,18 @@ function header() {
     <div>
       <div className="topportion">
         <div className="Mheader ">
-          <div>
-            <img className="logoheader" src="logo192.png" />
-            <a>Help</a>
-            <a>Rent your tools</a>
-            <a>About</a>
-            <a>{user}</a>
-          </div>
-          <div align="right">
-            <a>user.name</a>
+          <div className="row">
+            <img
+              className="logoheader"
+              src="logo192.png"
+              style={{ height: "40px", width: "40px" }}
+            />
+            <div align="left">
+              <a>Help</a>
+              <a>Rent your tools</a>
+              <a>About</a>
+              <a>{user}</a>
+            </div>
           </div>
         </div>
 
