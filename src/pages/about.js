@@ -70,7 +70,7 @@ export default function aboutPage() {
               style={{ borderRadius: "50%", height: "150px", width: "150px" }}
             />
             <div>Aditya Singh</div>
-            {/* <a href="">Portfolio</a> */}
+            <a href="https://github.com/Aditya-code-collab">Portfolio</a>
           </div>
         </div>
       </div>
